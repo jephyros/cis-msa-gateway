@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id : path_route
+          uri : http://localhost:8180
+          predicates:
+            - Path=/api/order/*
+          filters:
+            - CircuitBreaker=myCircuitBreaker
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+        - id: orde-fallback
+          uri: http://localhost:8080
+          predicates:
+            - Path=/fallback
+

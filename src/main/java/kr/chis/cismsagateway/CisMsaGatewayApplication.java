@@ -14,19 +14,19 @@ public class CisMsaGatewayApplication {
         SpringApplication.run(CisMsaGatewayApplication.class, args);
     }
 
-    @Bean
-    public RouteLocator myRoutes(RouteLocatorBuilder builder){
-        return builder.routes()
-                .route(p -> p
-                        .path("/api/order/list")
-                        .filters(f ->
-                            f.hystrix(config -> config
-                                    .setName("CISCMD")
-                                    .setFallbackUri("forward:/fallback"))
-
-                        )
-                        .uri("http://localhost:8180"))
-                .build();
+//    @Bean
+//    public RouteLocator myRoutes(RouteLocatorBuilder builder){
+//        return builder.routes()
+//                .route(p -> p
+//                        .path("/api/order/list")
+//                        .filters(f ->
+//                            f.hystrix(config -> config
+//                                    .setName("CISCMD")
+//                                    .setFallbackUri("forward:/fallback"))
+//
+//                        )
+//                        .uri("http://localhost:8180"))
+//                .build();
 
 //                .route(p -> p
 //                        .path("/get")
@@ -58,7 +58,8 @@ public class CisMsaGatewayApplication {
 //                        .uri("http://localhost:8180"))
 //                //.uri("http://localhost:8180/api/order/list2?page=1&size=4"))
 //                .build();
-    }
+
+//    }
 //    @Bean
 //    public RouteLocator myRoutes(RouteLocatorBuilder builder) {
 //        return builder.routes().build();
