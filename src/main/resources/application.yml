@@ -7,11 +7,9 @@ spring:
         - id : path_route
           uri : http://localhost:8180
           predicates:
-            - Path=/api/order/*
+            - Path=/api/order/**
           filters:
             - name: CircuitBreaker
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback
-
-
