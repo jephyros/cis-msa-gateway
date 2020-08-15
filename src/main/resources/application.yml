@@ -13,3 +13,8 @@ spring:
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: jwt_secret_key
