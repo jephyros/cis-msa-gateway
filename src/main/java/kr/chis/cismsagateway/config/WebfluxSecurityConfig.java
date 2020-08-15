@@ -30,11 +30,11 @@ public class WebfluxSecurityConfig {
         http.authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository);
 
-        //token 발행 경로 는 permit 할것 //oauth/token
 
         http.authorizeExchange()
-                .pathMatchers("/**")
-                .authenticated()
+                .pathMatchers("/oauth/**").permitAll()
+                .pathMatchers("/**").hasAnyRole("ADMIN")
+                //.authenticated()
         ;
 
 

@@ -4,7 +4,16 @@ spring:
   cloud:
     gateway:
       routes:
-        - id : path_route
+        - id: path_auth
+          uri: http://localhost:8095
+          predicates:
+            - Path=/oauth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+        - id : path_order
           uri : http://localhost:8180
           predicates:
             - Path=/api/order/**

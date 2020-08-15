@@ -38,23 +38,14 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             DecodedJWT decodedJWT = jwtUtil.verifyToken(authToken);
 //
             Map<String, Claim> claims = decodedJWT.getClaims();    //Key is the Claim name
-            Iterator<String> iterator = claims.keySet().iterator();
-            iterator.forEachRemaining(v->{
-                Claim claim = claims.get(v);
-                log.info("{}: {}",v, claim.asString());
-            });
-            for(String x : claims.get("authorities").asArray(String.class)){
-                System.out.println("========== : " + x);
-            }
-
-
-            System.out.println("==============================================");
-            System.out.println(decodedJWT.getExpiresAt());
-            System.out.println(decodedJWT.getClaim("exp").asString());
-            System.out.println("==============================================");
 
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+            for(String role : claims.get("authorities").asArray(String.class)){
+                log.info("{} JWT Role : {}",claims.get("user_name").asString(),role);
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
+
             return Mono.just(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),null,authorities));
 
         } catch (Exception e) {
