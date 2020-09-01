@@ -32,6 +32,14 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         String authToken = authentication.getCredentials().toString();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        //임시 강제로그인
+        if (1==1) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            return Mono.just(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), null, authorities));
+        }
+        //임시 강제로그인
 
         //jwt 토근 검증 ?
         try {
@@ -39,7 +47,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 //
             Map<String, Claim> claims = decodedJWT.getClaims();    //Key is the Claim name
 
-            List<GrantedAuthority> authorities = new ArrayList<>();
+
 
             for(String role : claims.get("authorities").asArray(String.class)){
                 log.info("{} JWT Role : {}",claims.get("user_name").asString(),role);

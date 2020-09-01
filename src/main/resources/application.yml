@@ -22,6 +22,15 @@ spring:
               args:
                 name: myCircuitBreaker
                 fallbackUri: forward:/fallback
+        - id: path_shop
+          uri: http://localhost:8181
+          predicates:
+            - Path=/api/v1/shops/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
 security:
   oauth2:
     resource:
