@@ -30,7 +30,8 @@ public class WebfluxSecurityConfig {
 
         http.httpBasic().disable();
         http.formLogin().disable();
-        http.cors().and().csrf().disable();
+        http.cors();
+        http.csrf().disable();
         http.logout().disable();
 
 
@@ -53,7 +54,7 @@ public class WebfluxSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8190"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
