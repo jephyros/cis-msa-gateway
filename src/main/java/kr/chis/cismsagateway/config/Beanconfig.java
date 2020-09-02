@@ -1,9 +1,6 @@
 package kr.chis.cismsagateway.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.beans.Customizer;
 
 /**
  * @author InSeok
@@ -12,5 +9,6 @@ import java.beans.Customizer;
  */
 @Configuration
 public class Beanconfig {
+
 
 }

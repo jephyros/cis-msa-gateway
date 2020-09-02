@@ -5,6 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 /**
  * @author InSeok
@@ -24,8 +30,11 @@ public class WebfluxSecurityConfig {
 
         http.httpBasic().disable();
         http.formLogin().disable();
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
         http.logout().disable();
+
+
+
 
         http.authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository);
@@ -39,5 +48,17 @@ public class WebfluxSecurityConfig {
 
 
         return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
